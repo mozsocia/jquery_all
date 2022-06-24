@@ -1,4 +1,4 @@
-### the form 
+### The form 
 ```html
 <div id="contact_form">
   <form name="contact" action="">
@@ -20,7 +20,7 @@
 </div>
 ```
 
-### the js 
+### The js 
 ```js
 <script>
   $(function () {
@@ -47,7 +47,7 @@
 ```
 
 
-## another way using post method
+## Another way using post method
 
 ```html
 
