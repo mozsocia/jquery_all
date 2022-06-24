@@ -89,3 +89,40 @@
 </script>
 ```
 
+
+
+### Another way of functional approach
+```js
+
+<script>
+  $(function () {
+
+    function sendData($form) {
+      let dataString = $form.serialize();
+      return $.ajax({
+        type: $form.attr('method'),
+        url: $form.attr('action'),
+        data: dataString
+      });
+    }
+
+
+    $("form").validate();
+
+    $("form").on("submit", function (e) {
+      e.preventDefault();
+
+      var dataString = $(this).serialize();
+      // alert(dataString); return false;
+
+      sendData($(this)).done(function () {
+        $("#contact_form").html("<div id='message'> Success </div>");
+      })
+    });
+
+  });
+</script>
+```
+
+
+
