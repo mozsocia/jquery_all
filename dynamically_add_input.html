@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <form id="myForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <div id="dynamicInputsContainer">
+        <!-- This container will hold the dynamically added inputs -->
+      </div>
+
+      <button type="button" id="addInput">Add Input</button>
+      <button type="submit">Submit</button>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#myForm").validate({
+          rules: {
+            name: {
+              required: true,
+            },
+            // Add validation rules for other initial form fields here
+          },
+          messages: {
+            name: {
+              required: "Please enter your name.",
+            },
+            // Add error messages for other initial form fields here
+          },
+        });
+      });
+    </script>
+
+<script>
+  $(document).ready(function() {
+    var inputCounter = 1;
+
+    // Initialize jQuery Validate on the form
+    var formValidator = $("#myForm").validate({
+      rules: {
+        name: {
+          required: true
+        }
+        // Add validation rules for other initial form fields here
+      },
+      messages: {
+        name: {
+          required: "Please enter your name."
+        }
+        // Add error messages for other initial form fields here
+      }
+    });
+
+    $("#addInput").on("click", function() {
+      // Create a new input element with a unique ID
+      var newInput = $("<input type='text' name='dynamicInput" + inputCounter + "' required>");
+
+      // Append the new input element to the form
+      $("#dynamicInputsContainer").append(newInput);
+
+
+      console.log(inputCounter);
+      // Increment the input counter for the next dynamically added input
+      inputCounter++
+      console.log(inputCounter);
+    });
+  });
+</script>
+
+
+  </body>
+</html>
