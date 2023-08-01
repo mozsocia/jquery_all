@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alpine.js Form Example</title>
+    <!-- Include Alpine.js library -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+  </head>
+  <body>
+    <div x-data="formData()">
+      <form @submit.prevent="submitForm" class="js-form" id="form">
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" x-model="name" name="name" />
+        </div>
+        <br />
+
+        <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" x-model="email" name="email" />
+    </div>
+        <br />
+
+        <!-- Add a button to dynamically add input fields -->
+        <button type="button" @click="addInput">Add Input</button>
+
+        <br />
+
+        <!-- Use x-for to loop through the dynamic input fields -->
+        <template x-for="(inputValue, index) in dynamicInputs" :key="index">
+          <div>
+            <label>Input </label>
+            <input type="text" x-model="dynamicInputs[index]" />
+
+            <br />
+          </div>
+        </template>
+
+        <br />
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <h2>Form Data:</h2>
+      <p>Name: <span x-text="name"></span></p>
+      <p>Email: <span x-text="email"></span></p>
+
+      <!-- Display the dynamic input field values -->
+      <h2>Dynamic Input Values:</h2>
+      <template x-for="(inputValue, index) in dynamicInputs" :key="index">
+        <p><span x-text="dynamicInputs[index]"></span></p>
+      </template>
+    </div>
+
+    <script>
+      const validate = new window.JustValidate("#form");
+    </script>
+
+    <script>
+      const validation = new window.JustValidate("#form");
+      validation
+        .addField("#name", [
+          {
+            rule: "required",
+            errorMessage: "name is required",
+          },
+          {
+            rule: "minLength",
+            value: 3,
+          },
+          {
+            rule: "maxLength",
+            value: 30,
+          },
+        ])
+        .addField("#email", [
+          {
+            rule: "required",
+            errorMessage: "Email is required",
+          },
+          {
+            rule: "email",
+            errorMessage: "Email is invalid!",
+          },
+        ]);
+
+      function formData() {
+        return {
+          name: "",
+          email: "",
+          dynamicInputs: [],
+
+          submitForm() {
+            validation.onSuccess(() => {
+              // You can perform any action with the form data here
+              // For demonstration purposes, we'll just log the data
+              console.log("Name:", this.name);
+              console.log("Email:", this.email);
+              console.log("Dynamic Inputs:", this.dynamicInputs);
+              console.log(this.saleOrderProducts);
+            });
+
+            // You can also send the form data to the server using fetch or any other method
+          },
+          addInput() {
+            this.dynamicInputs.push("");
+          },
+        };
+      }
+    </script>
+  </body>
+</html>
